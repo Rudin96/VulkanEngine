@@ -245,6 +245,13 @@ void Engine::createSwapChain()
     {
         throw std::runtime_error("failed to create swap chain!");
     }
+
+    vkGetSwapchainImagesKHR(device, swapChain, &imageCount, nullptr);
+    swapChainImages.resize(imageCount);
+    vkGetSwapchainImagesKHR(device, swapChain, &imageCount, swapChainImages.data());
+
+    swapChainImageFormat = surfaceFormat.format;
+    swapChainExtent = extent;
 }
 
 bool Engine::isDeviceSuitable(VkPhysicalDevice device) {
@@ -306,7 +313,7 @@ QueueFamilyIndices Engine::findQueueFamilies(VkPhysicalDevice device)
 
         if (presentSupport)
         {
-            indices.graphicsFamily = i;
+            indices.presentFamily = i;
         }
 
         if (indices.isComplete())
@@ -325,17 +332,16 @@ void Engine::mainLoop() {
 }
 
 void Engine::cleanup() {
+    vkDestroySwapchainKHR(device, swapChain, nullptr);
+    vkDestroyDevice(device, nullptr);
+
     if (enableValidationLayers) {
         DestroyDebugUtilsMessengerEXT(instance, debugMessenger, nullptr);
     }
 
     vkDestroySurfaceKHR(instance, surface, nullptr);
 
-    vkDestroySwapchainKHR(device, swapChain, nullptr);
-
     vkDestroyInstance(instance, nullptr);
-
-    vkDestroyDevice(device, nullptr);
 
     glfwDestroyWindow(window);
 

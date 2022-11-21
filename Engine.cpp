@@ -258,7 +258,9 @@ bool Engine::isDeviceSuitable(VkPhysicalDevice device) {
         swapChainAdequate = !swapChainSupport.formats.empty() && !swapChainSupport.presentModes.empty();
     }
 
-    return indices.isComplete() && extensionsSupported && swapChainAdequate;
+    bool indicesComplete = indices.isComplete();
+
+    return indicesComplete && extensionsSupported && swapChainAdequate;
 }
 
 bool Engine::checkDeviceExtensionSupport(VkPhysicalDevice device)

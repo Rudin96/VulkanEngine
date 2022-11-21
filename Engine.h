@@ -1,16 +1,14 @@
-#pragma once
-#define VK_USE_PLATFORM_WIN32_KHR
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
-#define GLFW_EXPOSE_NATIVE_WIN32
-#include <GLFW/glfw3native.h>
 
 #include <iostream>
 #include <stdexcept>
+#include <algorithm>
 #include <vector>
 #include <cstring>
 #include <cstdlib>
-#include <map>
+#include <cstdint>
+#include <limits>
 #include <optional>
 #include <set>
 
@@ -28,6 +26,12 @@ struct QueueFamilyIndices {
 	bool isComplete() {
 		return graphicsFamily.has_value() && presentFamily.has_value();
 	}
+};
+
+struct SwapChainSupportDetails {
+    VkSurfaceCapabilitiesKHR capabilities;
+    std::vector<VkSurfaceFormatKHR> formats;
+    std::vector<VkPresentModeKHR> presentModes;
 };
 
 #ifdef NDEBUG
@@ -58,6 +62,8 @@ private:
 
     VkQueue presentQueue;
 
+    VkSwapchainKHR swapChain;
+
     const std::vector<const char*> deviceExtensions = {
         VK_KHR_SWAPCHAIN_EXTENSION_NAME
     };
@@ -66,11 +72,21 @@ private:
 
     void initVulkan();
 
+    SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
+
+    VkSurfaceFormatKHR chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats);
+
+    VkPresentModeKHR chooseSwapPresentMode(const std::vector<VkPresentModeKHR>& availablePresentModes);
+
+    VkExtent2D chooseSwapExtent(const VkSurfaceCapabilitiesKHR& capabilities);
+
     void createSurface();
 
     void pickPhysicalDevice();
 
     void createLogicalDevice();
+
+    void createSwapChain();
 
     bool isDeviceSuitable(VkPhysicalDevice device);
 

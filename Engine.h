@@ -16,6 +16,8 @@
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
 
+const int MAX_FRAMES_IN_FLIGHT = 2;
+
 const std::vector<const char*> validationLayers = {
     "VK_LAYER_KHRONOS_validation"
 };
@@ -80,6 +82,26 @@ private:
 
     VkSurfaceKHR surface;
 
+    VkRenderPass renderPass;
+
+    VkPipelineLayout pipelineLayout;
+
+    VkPipeline graphicsPipeline;
+
+    std::vector<VkFramebuffer> swapChainFrameBuffers;
+
+    VkCommandPool commandPool;
+
+    std::vector<VkCommandBuffer> commandBuffers;
+
+    std::vector<VkSemaphore> imageAvailableSemaphores;
+    std::vector<VkSemaphore> renderFinishedSemaphores;
+    std::vector<VkFence> inFlightFences;
+
+    uint32_t currentFrame = 0;
+
+    bool framebufferResized = false;
+
     void initWindow();
 
     void initVulkan();
@@ -106,6 +128,24 @@ private:
 
     void createGraphicsPipeline();
 
+    void createRenderPass();
+
+    void createFrameBuffers();
+
+    void createCommandPool();
+    
+    void createCommandBuffers();
+
+    void drawFrame();
+
+    void recreateSwapChain();
+
+    void cleanupSwapChain();
+    
+    void createSyncObjects();
+
+    void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+
     VkShaderModule createShaderModule(const std::vector<char>& code);
 
     bool isDeviceSuitable(VkPhysicalDevice device);
@@ -117,6 +157,8 @@ private:
     void mainLoop();
 
     void cleanup();
+
+    void destroyFrameBuffers();
 
     void createInstance();
 
@@ -150,6 +192,12 @@ private:
         file.close();
 
         return buffer;
+    }
+
+    static void frameBufferResizeCallback(GLFWwindow* window, int width, int height)
+    {
+        auto app = reinterpret_cast<Engine*>(glfwGetWindowUserPointer(window));
+        app->framebufferResized = true;
     }
 
 };

@@ -136,11 +136,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Engine.cpp" />
+    <ClCompile Include="DataTypes\String.cpp" />
+    <ClCompile Include="DataTypes\Vector.cpp" />
+    <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Player\Player.cpp" />
+    <ClCompile Include="Utils\List.cpp" />
+    <ClCompile Include="Utils\Logger.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine.h" />
+    <ClInclude Include="DataTypes\String.h" />
+    <ClInclude Include="DataTypes\Vector.h" />
+    <ClInclude Include="Engine\Engine.h" />
+    <ClInclude Include="Player\Player.h" />
+    <ClInclude Include="Utils\List.h" />
+    <ClInclude Include="Utils\Logger.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="shader.frag">

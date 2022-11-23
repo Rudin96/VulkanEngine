@@ -1,13 +1,14 @@
-#include "Engine.h"
+#include "Engine/Engine.h"
+#include "Utils/Logger.h"
 
 int main() {
-    Engine app;
+    Engine engine;
 
     try {
-        app.run();
+        engine.run();
     }
     catch (const std::exception& e) {
-        std::cerr << e.what() << std::endl;
+        Logger::LogError(e.what());
         return EXIT_FAILURE;
     }
 

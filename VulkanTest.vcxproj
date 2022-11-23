@@ -143,7 +143,9 @@
     <ClInclude Include="Engine.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag" />
+    <None Include="shader.frag">
+      <FileType>Script</FileType>
+    </None>
     <None Include="shader.vert">
       <FileType>Script</FileType>
     </None>

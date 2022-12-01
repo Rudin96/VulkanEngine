@@ -20,6 +20,7 @@ void Engine::DestroyDebugUtilsMessengerEXT(VkInstance instance, VkDebugUtilsMess
 void Engine::run() {
     initWindow();
     initVulkan();
+    initInput();
     mainLoop();
     cleanup();
 }
@@ -28,7 +29,6 @@ void Engine::initWindow() {
     glfwInit();
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-    //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 
     window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan Engine", nullptr, nullptr);
     glfwSetWindowUserPointer(window, this);
@@ -1036,6 +1036,12 @@ bool Engine::checkValidationLayerSupport() {
     }
 
     return true;
+}
+
+void Engine::initInput()
+{
+    glfwSetCursorPosCallback(window, Input::cursor_callback);
+    glfwSetKeyCallback(window, Input::keyboardKey_callback);
 }
 
 void Engine::createSurface()

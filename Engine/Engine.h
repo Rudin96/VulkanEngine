@@ -14,6 +14,7 @@
 #include <fstream>
 #include <array>
 #include "../DataTypes/Vector.h"
+#include "Input/Input.h"
 
 #include <glm/glm.hpp>
 
@@ -260,5 +261,8 @@ private:
         auto app = reinterpret_cast<Engine*>(glfwGetWindowUserPointer(window));
         app->framebufferResized = true;
     }
+
+    //INPUT STUFF, will separate graphics part into separate class soon
+    void initInput();
 
 };

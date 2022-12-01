@@ -2,7 +2,8 @@
 
 #include <iostream>
 
-struct Vector2 {
+struct Vector2 
+{
     float x = 0;
     float y = 0;
 

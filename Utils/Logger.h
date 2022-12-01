@@ -29,10 +29,9 @@
 
 class Logger 
 {
-public:
-
+private:
     Logger();
-
+public:
     template<typename T>
     static void Log(T object) {std::cout << "[LOG_MESSAGE]: " << object << std::endl; }
     template<typename T>

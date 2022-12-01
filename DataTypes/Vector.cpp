@@ -2,12 +2,12 @@
 
 Vector3::Vector3()
 {
-    x = 0;
-    y = 0;
-    z = 0;
+    x = 0.f;
+    y = 0.f;
+    z = 0.f;
 };
 
-Vector3::Vector3(int x, int y, int z)
+Vector3::Vector3(float x, float y, float z)
 {
     this->x = x;
     this->y = y;
@@ -54,13 +54,13 @@ Vector3& Vector3::operator-(const Vector3 &other)
     return (*this);
 }
 
-Vector3& Vector3::operator*(const int other)
+Vector3& Vector3::operator*(const float other)
 {
     this->Multiply(Vector3(other, other, other));
     return (*this);
 }
 
-Vector3& Vector3::operator/(const int other)
+Vector3& Vector3::operator/(const float other)
 {
     this->Divide(Vector3(other, other, other));
     return *this;
@@ -80,26 +80,38 @@ std::ostream& operator<<(std::ostream &stream, const Vector3 &vector)
 
 Vector2::Vector2()
 {
+    x = 0.f;
+    y = 0.f;
 }
 
-Vector2::Vector2(int x, int y)
+Vector2::Vector2(float x, float y)
 {
-}
-
-void Vector2::Add(const Vector2& other)
-{
+    this->x = x;
+    this->y = y;
 }
 
 void Vector2::Subtract(const Vector2& other)
 {
+    this->x -= other.x;
+    this->y -= other.y;
+}
+
+void Vector2::Add(const Vector2& other)
+{
+    this->x += other.x;
+    this->y += other.y;
 }
 
 void Vector2::Multiply(const Vector2& other)
 {
+    this->x *= other.x;
+    this->y *= other.y;
 }
 
 void Vector2::Divide(const Vector2& other)
 {
+    this->x /= other.x;
+    this->y /= other.y;
 }
 
 Vector2& Vector2::operator+(const Vector2& other)

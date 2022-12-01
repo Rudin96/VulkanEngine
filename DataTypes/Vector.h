@@ -3,11 +3,11 @@
 #include <iostream>
 
 struct Vector2 {
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
 
     Vector2();
-    Vector2(int x, int y);
+    Vector2(float x, float y);
 
     friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector);
 
@@ -24,12 +24,12 @@ struct Vector2 {
 
 struct Vector3
 {
-    int x = 0;
-    int y = 0;
-    int z = 0;
+    float x = 0;
+    float y = 0;
+    float z = 0;
 
     Vector3();
-    Vector3(int x, int y, int z);
+    Vector3(float x, float y, float z);
 
     friend std::ostream& operator<<(std::ostream &stream, const Vector3 &vector);
 
@@ -40,7 +40,7 @@ struct Vector3
 
     Vector3& operator +(const Vector3 &other);
     Vector3& operator -(const Vector3 &other);
-    Vector3& operator *(const int other);
-    Vector3& operator /(const int other);
+    Vector3& operator *(const float other);
+    Vector3& operator /(const float other);
 
 };

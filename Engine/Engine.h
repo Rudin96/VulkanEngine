@@ -12,6 +12,10 @@
 #include <optional>
 #include <set>
 #include <fstream>
+#include <array>
+#include "../DataTypes/Vector.h"
+
+#include <glm/glm.hpp>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -24,6 +28,51 @@ const std::vector<const char*> validationLayers = {
 
 const std::vector<const char*> deviceExtensions = {
 	VK_KHR_SWAPCHAIN_EXTENSION_NAME
+};
+
+struct Vertex {
+    /*glm::vec2 pos;
+    glm::vec3 color;*/
+
+    Vector2 pos;
+    Vector3 color;
+
+    static VkVertexInputBindingDescription getBindingDescription()
+    {
+        VkVertexInputBindingDescription bindingDescription{};
+        bindingDescription.binding = 0;
+        bindingDescription.stride = sizeof(Vertex);
+        bindingDescription.inputRate = VK_VERTEX_INPUT_RATE_VERTEX;
+
+        return bindingDescription;
+    }
+
+    static std::array<VkVertexInputAttributeDescription, 2> getAttributeDescriptions() {
+        std::array<VkVertexInputAttributeDescription, 2> attributeDescriptions{};
+
+        attributeDescriptions[0].binding = 0;
+        attributeDescriptions[0].location = 0;
+        attributeDescriptions[0].format = VK_FORMAT_R32G32_SFLOAT;
+        attributeDescriptions[0].offset = offsetof(Vertex, pos);
+
+        attributeDescriptions[1].binding = 0;
+        attributeDescriptions[1].location = 1;
+        attributeDescriptions[1].format = VK_FORMAT_R32G32B32_SFLOAT;
+        attributeDescriptions[1].offset = offsetof(Vertex, color);
+
+        return attributeDescriptions;
+    }
+};
+
+const std::vector<Vertex> vertices = {
+    {{-0.5f, -0.5f}, {1.0f, 0.0f, 0.0f}},
+    {{0.5f, -0.5f}, {0.0f, 1.0f, 0.0f}},
+    {{0.5f, 0.5f}, {0.0f, 0.0f, 1.0f}},
+    {{-0.5f, 0.5f}, {1.0f, 1.0f, 1.0f}}
+};
+
+const std::vector<uint16_t> indices = {
+    0, 1, 2, 2, 3, 0
 };
 
 struct QueueFamilyIndices {
@@ -102,6 +151,11 @@ private:
 
     bool framebufferResized = false;
 
+    VkBuffer vertexBuffer;
+    VkDeviceMemory vertexBufferMemory;
+    VkBuffer indexBuffer;
+    VkDeviceMemory indexBufferMemory;
+
     void initWindow();
 
     void initVulkan();
@@ -144,6 +198,14 @@ private:
     
     void createSyncObjects();
 
+    void createVertexBuffer();
+
+    void createIndexBuffer();
+
+    void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
+
+    void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
+
     void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
 
     VkShaderModule createShaderModule(const std::vector<char>& code);
@@ -157,6 +219,8 @@ private:
     void mainLoop();
 
     void cleanup();
+
+    uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 
     void destroyFrameBuffers();
 

@@ -1,3 +1,78 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Engine\Engine.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Input\Input.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\List.cpp">
+      <Filter>EngineTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Player\Player.cpp">
+      <Filter>Player</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTypes\String.cpp">
+      <Filter>EngineTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="DataTypes\Vector.cpp">
+      <Filter>EngineTypes</Filter>
+    </ClCompile>
+    <ClCompile Include="Utils\Logger.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Engine\Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Input\Input.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\List.h">
+      <Filter>EngineTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Player\Player.h">
+      <Filter>Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes\String.h">
+      <Filter>EngineTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="DataTypes\Vector.h">
+      <Filter>EngineTypes</Filter>
+    </ClInclude>
+    <ClInclude Include="Utils\Logger.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="shader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="shader.vert">
+      <Filter>Shaders</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{e33a1758-7f7c-4b8b-af50-31b2887194e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{57535463-7f42-4313-b3f7-d1d68658d6c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Player">
+      <UniqueIdentifier>{e9661508-d692-4cc1-bb01-7899abd79760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{27f8b3df-c08f-4224-b560-e6598f3a46e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{021da0d0-23df-4049-848e-386bf79b5604}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EngineTypes">
+      <UniqueIdentifier>{d52f322c-2501-4061-8ea1-bee7347034ea}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
 </Project>

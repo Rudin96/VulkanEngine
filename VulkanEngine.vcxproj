@@ -146,6 +146,7 @@
     <ClCompile Include="DataTypes\Vector.cpp" />
     <ClCompile Include="Engine\Engine.cpp" />
     <ClCompile Include="Engine\Input\Input.cpp" />
+    <ClCompile Include="ImageLoader.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player\Player.cpp" />
     <ClCompile Include="Utils\List.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="DataTypes\Vector.h" />
     <ClInclude Include="Engine\Engine.h" />
     <ClInclude Include="Engine\Input\Input.h" />
+    <ClInclude Include="ImageLoader.h" />
     <ClInclude Include="Player\Player.h" />
     <ClInclude Include="Utils\List.h" />
     <ClInclude Include="Utils\Logger.h" />

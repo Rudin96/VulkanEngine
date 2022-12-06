@@ -16,7 +16,10 @@
 #include "../DataTypes/Vector.h"
 #include "Input/Input.h"
 
+#define GLM_FORCE_RADIANS
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <chrono>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -83,9 +86,9 @@ struct QueueFamilyIndices {
 };
 
 struct UniformBufferObject {
-    glm::mat4 model;
-    glm::mat4 view;
-    glm::mat4 proj;
+    alignas(16) glm::mat4 model;
+    alignas(16) glm::mat4 view;
+    alignas(16) glm::mat4 proj;
 };
 
 struct SwapChainSupportDetails {
@@ -137,6 +140,8 @@ private:
 
     VkRenderPass renderPass;
 
+    VkDescriptorSetLayout descriptorSetLayout;
+
     VkPipelineLayout pipelineLayout;
 
     VkPipeline graphicsPipeline;
@@ -159,6 +164,14 @@ private:
     VkDeviceMemory vertexBufferMemory;
     VkBuffer indexBuffer;
     VkDeviceMemory indexBufferMemory;
+
+    std::vector<VkBuffer> uniformBuffers;
+    std::vector<VkDeviceMemory> uniformBuffersMemory;
+    std::vector<void*> uniformBuffersMapped;
+
+    VkDescriptorPool descriptorPool;
+
+    std::vector<VkDescriptorSet> descriptorSets;
 
     void initWindow();
 
@@ -206,6 +219,14 @@ private:
 
     void createIndexBuffer();
 
+    void createUniformBuffers();
+
+    void createDescriptorPool();
+
+    void createDescriptorSets();
+
+    void updateUniformBuffer(uint32_t currentImage);
+
     void copyBuffer(VkBuffer srcBuffer, VkBuffer dstBuffer, VkDeviceSize size);
 
     void createBuffer(VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags properties, VkBuffer& buffer, VkDeviceMemory& bufferMemory);
@@ -225,6 +246,8 @@ private:
     void mainLoop();
 
     void cleanup();
+
+    void destroyUniformBuffers();
 
     uint32_t findMemoryType(uint32_t typeFilter, VkMemoryPropertyFlags properties);
 

@@ -1,25 +1,29 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+#define GLM_FORCE_RADIANS
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+
+#include <stb_image.h>
+
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include <algorithm>
+#include <chrono>
 #include <vector>
 #include <cstring>
 #include <cstdlib>
 #include <cstdint>
 #include <limits>
+#include <array>
 #include <optional>
 #include <set>
-#include <fstream>
-#include <array>
+
 #include "../DataTypes/Vector.h"
 #include "Input/Input.h"
 
-#define GLM_FORCE_RADIANS
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <chrono>
 
 const uint32_t WIDTH = 800;
 const uint32_t HEIGHT = 600;
@@ -173,6 +177,9 @@ private:
 
     std::vector<VkDescriptorSet> descriptorSets;
 
+    VkImage textureImage;
+    VkDeviceMemory textureImageMemory;
+
     void initWindow();
 
     void initVulkan();
@@ -234,6 +241,18 @@ private:
     void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
 
     void createDescriptorSetLayout();
+
+    void createTextureImage();
+
+    void createImage(uint32_t width, uint32_t height, VkFormat format, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties, VkImage& image, VkDeviceMemory& imageMemory);
+
+    VkCommandBuffer beginSingleTimeCommands();
+
+    void endSingleTimeCommands(VkCommandBuffer commandBuffer);
+
+    void transitionImageLayout(VkImage image, VkFormat format, VkImageLayout oldLayout, VkImageLayout newLayout);
+
+    void copyBufferToImage(VkBuffer buffer, VkImage image, uint32_t width, uint32_t height);
 
     VkShaderModule createShaderModule(const std::vector<char>& code);
 

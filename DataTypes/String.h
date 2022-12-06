@@ -6,7 +6,7 @@ class String
 {
 private:
     char* c_buffer;
-    unsigned int size;
+    size_t size;
 public:
     String(const char* newString);
     ~String();

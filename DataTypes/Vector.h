@@ -21,6 +21,10 @@ struct Vector2
     Vector2& operator -(const Vector2& other);
     Vector2& operator *(const Vector2& other);
     Vector2& operator /(const Vector2& other);
+
+    bool operator==(const Vector2& other) const {
+        return this->x == other.x && this->y == other.y;
+    }
 };
 
 struct Vector3
@@ -43,5 +47,9 @@ struct Vector3
     Vector3& operator -(const Vector3 &other);
     Vector3& operator *(const float other);
     Vector3& operator /(const float other);
+
+    bool operator==(const Vector3& other) const {
+        return this->x == other.x && this->y == other.y && this->z == other.z;
+    }
 
 };

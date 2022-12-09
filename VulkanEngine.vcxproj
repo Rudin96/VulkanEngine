@@ -163,12 +163,8 @@
     <ClInclude Include="Utils\Logger.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag">
-      <FileType>Script</FileType>
-    </None>
-    <None Include="shader.vert">
-      <FileType>Script</FileType>
-    </None>
+    <None Include="Shaders\shader.frag" />
+    <None Include="Shaders\shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

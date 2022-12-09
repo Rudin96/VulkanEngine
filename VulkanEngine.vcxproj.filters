@@ -54,14 +54,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="shader.frag">
-      <Filter>Shaders</Filter>
-    </None>
-    <None Include="shader.vert">
-      <Filter>Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Filter Include="Engine">
       <UniqueIdentifier>{e33a1758-7f7c-4b8b-af50-31b2887194e8}</UniqueIdentifier>
     </Filter>
@@ -80,5 +72,13 @@
     <Filter Include="EngineTypes">
       <UniqueIdentifier>{d52f322c-2501-4061-8ea1-bee7347034ea}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\shader.frag">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Shaders\shader.vert">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

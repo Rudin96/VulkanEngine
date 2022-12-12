@@ -26,6 +26,7 @@
     <ClCompile Include="ImageLoader.cpp">
       <Filter>Utils</Filter>
     </ClCompile>
+    <ClCompile Include="ModelLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Engine\Engine.h">
@@ -52,6 +53,7 @@
     <ClInclude Include="ImageLoader.h">
       <Filter>Utils</Filter>
     </ClInclude>
+    <ClInclude Include="ModelLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

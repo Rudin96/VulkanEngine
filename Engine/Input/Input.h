@@ -9,7 +9,11 @@ class Input
 {
 private:
 	Vector2 mousePos;
+	Vector2 prevMousePos;
+	Vector2 mouseDelta;
 	bool leftMouseButtonPressed = false;
+
+	float rightInputVal = 0.f;
 
 private:
 	Input();
@@ -19,8 +23,13 @@ public:
 	static void keyboardKey_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 	static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
-
 	Vector2 GetMousePosition();
+	Vector2 GetMouseDelta();
+
+	float GetRightInputVal();
+
+	void SetPrevMousePosition(const Vector2& pos);
+
 	bool IsLeftMousePressed();
 
 	static Input& getInstance()

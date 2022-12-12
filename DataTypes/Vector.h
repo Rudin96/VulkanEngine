@@ -8,6 +8,7 @@ struct Vector2
     float y = 0;
 
     Vector2();
+    Vector2(float value);
     Vector2(float x, float y);
 
     friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector);
@@ -21,6 +22,10 @@ struct Vector2
     Vector2& operator -(const Vector2& other);
     Vector2& operator *(const Vector2& other);
     Vector2& operator /(const Vector2& other);
+
+    bool operator!=(const Vector2& other) const {
+        return this->x != other.x || this->y != other.y;
+    }
 
     bool operator==(const Vector2& other) const {
         return this->x == other.x && this->y == other.y;

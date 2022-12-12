@@ -25,6 +25,18 @@ void Engine::run() {
     cleanup();
 }
 
+float Engine::getRotationRate()
+{
+    if (Input::getInstance().IsLeftMousePressed())
+    {
+        return Input::getInstance().GetMouseDelta().x;
+    }
+    else
+    {
+        return 60.f;
+    }
+}
+
 void Engine::initWindow() {
     glfwInit();
 
@@ -33,6 +45,11 @@ void Engine::initWindow() {
     window = glfwCreateWindow(WIDTH, HEIGHT, "Vulkan Engine", nullptr, nullptr);
     glfwSetWindowUserPointer(window, this);
     glfwSetFramebufferSizeCallback(window, frameBufferResizeCallback);
+}
+
+void Engine::initEditorWindow()
+{
+
 }
 
 void Engine::initVulkan() {
@@ -778,13 +795,17 @@ void Engine::updateUniformBuffer(uint32_t currentImage)
 
     auto currentTime = std::chrono::high_resolution_clock::now();
     float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
-    float rotSpeed = Input::getInstance().IsLeftMousePressed() ? 1.f : 5.f;
-    float rotAmount = glm::radians(90.f) * time * rotSpeed;
+
+    //float rotAmount = std::clamp(Input::getInstance().GetMouseDelta().x / 100.f, -1.f, 1.f);
+    float rotAmount = Input::getInstance().GetRightInputVal();
+
+    if (rotAmount != 0.f)
+        recreateSwapChain();
 
     UniformBufferObject ubo{};
-	ubo.model = glm::rotate(glm::mat4(1.0f), rotAmount, glm::vec3(0.0f, 1.0f, 1.0f));
+	ubo.model = glm::rotate(glm::mat4(1.0f), rotAmount * time, glm::vec3(0.0f, 0.0f, 1.0f));
     ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.proj = glm::perspective(glm::radians(45.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+    ubo.proj = glm::perspective(glm::radians(55.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
 
     ubo.proj[1][1] *= -1;
 

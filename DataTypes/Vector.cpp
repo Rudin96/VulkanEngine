@@ -84,6 +84,11 @@ Vector2::Vector2()
     y = 0.f;
 }
 
+Vector2::Vector2(float value)
+{
+    this->x, this->y = value;
+}
+
 Vector2::Vector2(float x, float y)
 {
     this->x = x;

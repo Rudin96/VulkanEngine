@@ -8,7 +8,9 @@ Input::Input()
 
 void Input::cursor_callback(GLFWwindow* window, double xPos, double yPos)
 {
-	getInstance().mousePos = Vector2(xPos, yPos);
+	getInstance().mousePos = Vector2(xPos, yPos) - getInstance().GetCenterOfWindow(window);
+	getInstance().CalculateMouseDelta();
+	getInstance().CalculateMouseDeltaFromCenterWindow(window);
 }
 
 void Input::keyboardKey_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -25,11 +27,16 @@ void Input::keyboardKey_callback(GLFWwindow* window, int key, int scancode, int 
 		}
 		Logger::Log("Key pressed!");
 	}
-	if (action == GLFW_RELEASE)
-	{
-		getInstance().rightInputVal = 0.f;
-	}
-	//Logger::Log(action);
+}
+
+Vector2 Input::GetMouseDirectionFromCenterWindow()
+{
+	return mousePos.Normalize();
+}
+
+void Input::SetLeftMouseReleaseCallback(const std::function<void()>& func)
+{
+	leftMouseReleaseCallback = func;
 }
 
 void Input::mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
@@ -42,8 +49,15 @@ void Input::mouse_button_callback(GLFWwindow* window, int button, int action, in
 	else
 	{
 		getInstance().leftMouseButtonPressed = false;
+		getInstance().leftMouseReleaseCallback();
 		getInstance().SetPrevMousePosition(Vector2(0.f));
 	}
+}
+
+void Input::scroll_callback(GLFWwindow* window, double xOffset, double yOffset)
+{
+	getInstance().scrollDir = yOffset;
+	getInstance().scrollCallBack(yOffset);
 }
 
 Vector2 Input::GetMousePosition()
@@ -56,7 +70,6 @@ Vector2 Input::GetMouseDelta()
 	if (getInstance().IsLeftMousePressed() && getInstance().prevMousePos != getInstance().mousePos)
 	{
 		mouseDelta = getInstance().mousePos - getInstance().prevMousePos;
-		Logger::Log(mouseDelta);
 	}
 	else {
 		mouseDelta = Vector2(0.f);
@@ -72,6 +85,41 @@ float Input::GetRightInputVal()
 void Input::SetPrevMousePosition(const Vector2& pos)
 {
 	getInstance().prevMousePos = pos;
+}
+
+void Input::CalculateMouseDelta()
+{
+	if (getInstance().IsLeftMousePressed())
+	{
+		getInstance().mouseDelta = getInstance().mousePos - getInstance().prevMousePos;
+		getInstance().mouseMoveCallBack(getInstance().mousePos);
+	}
+}
+
+void Input::SetCursorMoveCallback(const std::function<void(Vector2)>& func)
+{
+	mouseMoveCallBack = func;
+}
+
+void Input::SetScrollCallback(const std::function<void(float)>& func)
+{
+	scrollCallBack = func;
+}
+
+Vector2 Input::GetCenterOfWindow(GLFWwindow* window)
+{
+	int width, height;
+	glfwGetWindowSize(window, &width, &height);
+	
+	return Vector2(width / 2.f, height / 2.f);
+}
+
+void Input::CalculateMouseDeltaFromCenterWindow(GLFWwindow* window)
+{
+	if (getInstance().IsLeftMousePressed())
+	{
+		mouseDeltaFromCenterWindow = mousePos - GetCenterOfWindow(window);
+	}
 }
 
 bool Input::IsLeftMousePressed()

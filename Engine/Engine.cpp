@@ -25,16 +25,26 @@ void Engine::run() {
     cleanup();
 }
 
-float Engine::getRotationRate()
+void Engine::SetViews(const Vector2& newView)
 {
-    if (Input::getInstance().IsLeftMousePressed())
-    {
-        return Input::getInstance().GetMouseDelta().x;
-    }
-    else
-    {
-        return 60.f;
-    }
+    //view1.x = newView.y;
+    //view1.y = newView.x;
+    //view2.x = newView.x;
+    //view2.y = newView.y;
+}
+
+void Engine::SetRotationAmount(float newVal)
+{
+    rotAmount = glm::clamp(rotAmount = newVal, -50.f, 50.f);
+}
+
+void Engine::SetRotationAxis(const Vector2& axis)
+{
+    Vector2 nAxis = axis;
+    nAxis.Normalize();
+    rotAxis.z = nAxis.x;
+    Logger::Log(axis.x);
+    //rotAxis.y = axis.y;
 }
 
 void Engine::initWindow() {
@@ -105,6 +115,11 @@ SwapChainSupportDetails Engine::querySwapChainSupport(VkPhysicalDevice device)
 
 
     return details;
+}
+
+void Engine::CalculateAndSetDeltaTime()
+{
+
 }
 
 VkSurfaceFormatKHR Engine::chooseSwapSurfaceFormat(const std::vector<VkSurfaceFormatKHR>& availableFormats)
@@ -796,16 +811,10 @@ void Engine::updateUniformBuffer(uint32_t currentImage)
     auto currentTime = std::chrono::high_resolution_clock::now();
     float time = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - startTime).count();
 
-    //float rotAmount = std::clamp(Input::getInstance().GetMouseDelta().x / 100.f, -1.f, 1.f);
-    float rotAmount = Input::getInstance().GetRightInputVal();
-
-    if (rotAmount != 0.f)
-        recreateSwapChain();
-
     UniformBufferObject ubo{};
-	ubo.model = glm::rotate(glm::mat4(1.0f), rotAmount * time, glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.view = glm::lookAt(glm::vec3(2.0f, 2.0f, 2.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f));
-    ubo.proj = glm::perspective(glm::radians(55.0f), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
+	ubo.model = glm::rotate(glm::mat4(1.0f), rotAmount / 100.f * time, glm::vec3(0.f, 0.f, 1.f));
+    ubo.view = glm::lookAt(glm::vec3(2.f, 2.f, 2.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.0f, 0.0f, 1.0f));
+    ubo.proj = glm::perspective(glm::radians(fov), swapChainExtent.width / (float)swapChainExtent.height, 0.1f, 10.0f);
 
     ubo.proj[1][1] *= -1;
 
@@ -1547,8 +1556,12 @@ bool Engine::checkValidationLayerSupport() {
 void Engine::initInput()
 {
     glfwSetCursorPosCallback(window, Input::getInstance().cursor_callback);
+    Input::getInstance().SetCursorMoveCallback([this](Vector2 pos) {SetViews(pos); SetRotationAmount(pos.x / 200.f);});
     glfwSetKeyCallback(window, Input::getInstance().keyboardKey_callback);
     glfwSetMouseButtonCallback(window, Input::getInstance().mouse_button_callback);
+    Input::getInstance().SetLeftMouseReleaseCallback([this]() { SetRotationAmount(0.f); });
+    Input::getInstance().SetScrollCallback([this](float val) {fov += val * 10.f;});
+    glfwSetScrollCallback(window, Input::getInstance().scroll_callback);
 }
 
 void Engine::createSurface()

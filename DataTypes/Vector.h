@@ -17,6 +17,11 @@ struct Vector2
     void Subtract(const Vector2& other);
     void Multiply(const Vector2& other);
     void Divide(const Vector2& other);
+    void Divide(const float amount);
+
+    Vector2& Normalize();
+
+    float Magnitude();
 
     Vector2& operator +(const Vector2& other);
     Vector2& operator -(const Vector2& other);

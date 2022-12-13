@@ -1,6 +1,10 @@
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
+//#include "imgui.h"
+//#include "imgui_impl_glfw.h"
+//#include "imgui_impl_vulkan.h"
+
 #define GLM_FORCE_RADIANS
 #define GLM_FORCE_DEPTH_ZERO_TO_ONE
 #define GLM_ENABLE_EXPERIMENTAL
@@ -31,8 +35,8 @@
 #include "Input/Input.h"
 
 
-const uint32_t WIDTH = 800;
-const uint32_t HEIGHT = 600;
+const uint32_t WIDTH = 1280;
+const uint32_t HEIGHT = 720;
 
 const std::string MODEL_PATH = "models/viking_room.obj";
 const std::string TEXTURE_PATH = "textures/viking_room.png";
@@ -204,10 +208,24 @@ private:
     VkDeviceMemory depthImageMemory;
     VkImageView depthImageView;
 
+    float fov = 75.f;
+    float rotAmount = 0.f;
+
+    glm::vec3 rotAxis;
+
+    void SetViews(const Vector2& newView);
+
+    void SetRotationAmount(float newVal);
+
+    void SetRotationAxis(const Vector2& axis);
 
     void initWindow();
 
+    void initEditorWindow();
+
     void initVulkan();
+
+    void CalculateAndSetDeltaTime();
 
     SwapChainSupportDetails querySwapChainSupport(VkPhysicalDevice device);
 

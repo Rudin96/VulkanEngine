@@ -84,6 +84,11 @@ Vector2::Vector2()
     y = 0.f;
 }
 
+Vector2::Vector2(float value)
+{
+    this->x, this->y = value;
+}
+
 Vector2::Vector2(float x, float y)
 {
     this->x = x;
@@ -114,6 +119,27 @@ void Vector2::Divide(const Vector2& other)
     this->y /= other.y;
 }
 
+void Vector2::Divide(const float amount)
+{
+    if (amount > 0.f)
+	{
+		this->x /= amount;
+		this->y /= amount;
+	}
+}
+
+Vector2& Vector2::Normalize()
+{
+    // TODO: insert return statement here
+    this->Divide(this->Magnitude());
+    return *this;
+}
+
+float Vector2::Magnitude()
+{
+    return sqrt(this->x * this->x + this->y * this->y);
+}
+
 Vector2& Vector2::operator+(const Vector2& other)
 {
     this->Add(other);
@@ -134,6 +160,6 @@ Vector2& Vector2::operator*(const Vector2& other)
 
 Vector2& Vector2::operator/(const Vector2& other)
 {
-    this->Multiply(other);
+    this->Divide(other);
     return *this;
 }

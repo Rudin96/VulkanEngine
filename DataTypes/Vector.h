@@ -8,6 +8,7 @@ struct Vector2
     float y = 0;
 
     Vector2();
+    Vector2(float value);
     Vector2(float x, float y);
 
     friend std::ostream& operator<<(std::ostream& stream, const Vector2& vector);
@@ -16,11 +17,20 @@ struct Vector2
     void Subtract(const Vector2& other);
     void Multiply(const Vector2& other);
     void Divide(const Vector2& other);
+    void Divide(const float amount);
+
+    Vector2& Normalize();
+
+    float Magnitude();
 
     Vector2& operator +(const Vector2& other);
     Vector2& operator -(const Vector2& other);
     Vector2& operator *(const Vector2& other);
     Vector2& operator /(const Vector2& other);
+
+    bool operator!=(const Vector2& other) const {
+        return this->x != other.x || this->y != other.y;
+    }
 
     bool operator==(const Vector2& other) const {
         return this->x == other.x && this->y == other.y;

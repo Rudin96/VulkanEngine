@@ -319,8 +319,8 @@ void Engine::destroyImageViews()
 
 void Engine::createGraphicsPipeline()
 {
-    auto vertShaderCode = readFile("Shaders/vert.spv");
-    auto fragShaderCode = readFile("Shaders/frag.spv");
+    auto vertShaderCode = readFile("../Shaders/vert.spv");
+    auto fragShaderCode = readFile("../Shaders/frag.spv");
     VkShaderModule vertShaderModule = createShaderModule(vertShaderCode);
     VkShaderModule fragShaderModule = createShaderModule(fragShaderCode);
 

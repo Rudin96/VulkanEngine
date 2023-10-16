@@ -1,4 +1,5 @@
 #include "Vector.h"
+#include "glm/glm.hpp"
 
 Vector3::Vector3()
 {
@@ -137,7 +138,7 @@ Vector2& Vector2::Normalize()
 
 float Vector2::Magnitude()
 {
-    return sqrt(this->x * this->x + this->y * this->y);
+    return glm::sqrt(this->x * this->x + this->y * this->y);
 }
 
 Vector2& Vector2::operator+(const Vector2& other)

@@ -1,3 +1,5 @@
+#pragma once
+
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
 
@@ -14,7 +16,7 @@
 
 #include "stb_image.h"
 
-#include <tiny_obj_loader.h>
+#include "tiny_obj_loader.h"
 
 #include <iostream>
 #include <fstream>
@@ -38,8 +40,8 @@
 const uint32_t WIDTH = 1280;
 const uint32_t HEIGHT = 720;
 
-const std::string MODEL_PATH = "models/viking_room.obj";
-const std::string TEXTURE_PATH = "textures/viking_room.png";
+const std::string MODEL_PATH = "../models/viking_room.obj";
+const std::string TEXTURE_PATH = "../textures/viking_room.png";
 
 const int MAX_FRAMES_IN_FLIGHT = 2;
 

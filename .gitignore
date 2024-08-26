@@ -366,3 +366,5 @@ FodyWeavers.xsd
 
 #ALLOW
 !models/*
+/.idea
+/cmake-build-debug
